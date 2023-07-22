@@ -1,0 +1,5 @@
+# .env
+DEBUG=1
+PRODUCTION=0
+SECRET_KEY='ask_me_quora_app'
+# DJANGO_ALLOWED_HOSTS=* localhost 127.0.0.1 [::1]
