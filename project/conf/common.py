@@ -21,7 +21,9 @@ THIRD_PARTY_APPS = [
     'debug_toolbar',
 ]
 
-APPS = []
+APPS = [
+    'core',
+]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + APPS
 SITE_ID = 1
