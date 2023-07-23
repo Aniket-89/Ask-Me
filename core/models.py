@@ -10,6 +10,7 @@ class Question(models.Model):
     def __str__(self):
         return self.title
 
+
 class Answer(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
@@ -22,6 +23,7 @@ class Answer(models.Model):
 
     def total_likes(self):
         return self.likes.count()
+
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
