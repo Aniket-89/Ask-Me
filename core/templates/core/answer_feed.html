@@ -1,0 +1,24 @@
+{% for answer in question.answer_set.all %}
+    <div class="answer-container">
+    <p>
+        Posted by {% if user != answer.user %}
+        <a href="{{ question.user.userprofile.get_absolute_url }}"
+        >{{ answer.user.username }}</a
+        >{% else %} <strong>You</strong> {% endif %},
+        {{answer.created_at|timesince}}
+    </p>
+    <h2 class="secondary-heading">{{ answer.content }}</h2>
+
+    <form method="post" action="{% url 'core:like_answer' answer_id=answer.id %}">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-link">
+        {% if request.user in answer.likes.all %} 
+            Dislike 
+        {% else %} 
+            Like 
+        {% endif %}
+        </button>
+    </form>
+    <p>Total likes: {{ answer.total_likes }}</p>
+    </div>
+{% endfor %}

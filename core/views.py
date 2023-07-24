@@ -58,11 +58,19 @@ class PostQuestionView(LoginRequiredMixin, CreateView):
     model = Question
     form_class = QuestionForm
     template_name = 'core/post_question.html'
-    success_url = reverse_lazy('index')
+    success_url = reverse_lazy('core:index')
 
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super().form_valid(form)
+    
+    def dispatch(self, request, *args, **kwargs):
+        # Check if the user is authenticated
+        if not self.request.user.is_authenticated:
+            # Redirect the user to the login page
+            return redirect('core:login')
+        return super().dispatch(request, *args, **kwargs)
+
 
 class PostAnswerView(LoginRequiredMixin, CreateView):
     model = Answer
@@ -82,11 +90,18 @@ class PostAnswerView(LoginRequiredMixin, CreateView):
         return context
 
     def get_success_url(self):
-        return reverse_lazy('question_detail', kwargs={'pk': self.kwargs['question_id']})
+        return reverse_lazy('core:question_detail', kwargs={'pk': self.kwargs['question_id']})
+    
+    def dispatch(self, request, *args, **kwargs):
+    # Check if the user is authenticated
+        if not self.request.user.is_authenticated:
+            # Redirect the user to the login page
+            return redirect('core:login')
+        return super().dispatch(request, *args, **kwargs)
 
 
 class LikeAnswerView(LoginRequiredMixin, View):
-    def get(self, request, answer_id):
+    def post(self, request, answer_id):
         answer = get_object_or_404(Answer, id=answer_id)
         user = request.user
 
@@ -98,7 +113,11 @@ class LikeAnswerView(LoginRequiredMixin, View):
             # Like the answer
             answer.likes.add(user)
 
-        return redirect('question_detail', question_id=answer.question.id)
+        def get_success_url(self):
+            answer = get_object_or_404(Answer, id=self.kwargs['answer_id'])
+            return reverse_lazy('core:question_detail', kwargs={'pk': answer.question.id})
+
+        return redirect('core:question_detail', pk=answer.question.id)
 
 
 class QuestionEditView(LoginRequiredMixin, UpdateView):

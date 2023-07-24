@@ -1,0 +1,26 @@
+{% extends 'base.html' %} {% block content %}
+<div class="detail-container">
+  <div class="question-container">
+    <div class="flex-group">
+      <p>
+        Posted by {% if user != question.user %}
+        <a href="{{ question.user.userprofile.get_absolute_url }}"
+          >{{ question.user.username }}</a
+        >{% else %} <strong>You</strong> {% endif %},
+        {{question.created_at|timesince}}
+      </p>
+      {% if user != question.user %}
+      <a href="{% url 'core:post_answer' question_id=question.id %}" class="btn"
+        >Answer</a
+      >
+      {% endif %}
+    </div>
+    <h1 class="primary-heading">{{ question.title }}</h1>
+    <p>{{ question.content }}</p>
+  </div>
+  <hr />
+
+  {% include 'core/answer_feed.html' %}
+</div>
+
+{% endblock %}
