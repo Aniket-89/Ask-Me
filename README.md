@@ -28,11 +28,18 @@ Activate the virtualenv for your project.
     
 Install project dependencies:
 
-    $ pip install -r requirements/base.txt
+    $ pip install -r requirements/dev.txt
     
+Create a .env file 
+
+    DEBUG=1
+    PRODUCTION=0
+    SECRET_KEY='Enter your secretkey here'
+    DJANGO_ALLOWED_HOSTS=* localhost 127.0.0.1 [::1]
     
 Then simply apply the migrations:
 
+    $ python manage.py makemigrations
     $ python manage.py migrate
     
 
