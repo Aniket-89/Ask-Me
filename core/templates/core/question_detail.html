@@ -1,13 +1,13 @@
 {% extends 'base.html' %} {% block content %}
 <div class="detail-container">
-  <div class="question-container">
+  <div class="question-container question-container grid-row">
     <div class="flex-group">
       <p>
         Posted by {% if user != question.user %}
         <a href="{{ question.user.userprofile.get_absolute_url }}"
-          >{{ question.user.username }}</a
+          ><span class="fw-bold">{{ question.user.username }}</span></a
         >{% else %} <strong>You</strong> {% endif %},
-        {{question.created_at|timesince}}
+        {{question.created_at|timesince}} ago.
       </p>
       {% if user != question.user %}
       <a href="{% url 'core:post_answer' question_id=question.id %}" class="btn"

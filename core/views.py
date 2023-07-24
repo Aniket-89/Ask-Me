@@ -119,29 +119,3 @@ class LikeAnswerView(LoginRequiredMixin, View):
 
         return redirect('core:question_detail', pk=answer.question.id)
 
-
-class QuestionEditView(LoginRequiredMixin, UpdateView):
-    model = Question
-    form_class = QuestionForm
-    template_name = 'core/edit_question.html'
-    context_object_name = 'question'
-
-    def get_queryset(self):
-        return super().get_queryset().filter(user=self.request.user)
-
-    def get_success_url(self):
-        return reverse_lazy('question_detail', kwargs={'question_id': self.object.id})
-
-
-class AnswerEditView(LoginRequiredMixin, UpdateView):
-    model = Answer
-    form_class = AnswerForm
-    template_name = 'core/edit_answer.html'
-    context_object_name = 'answer'
-
-    def get_queryset(self):
-        return super().get_queryset().filter(user=self.request.user)
-
-    def get_success_url(self):
-        return reverse_lazy('question_detail', kwargs={'question_id': self.object.question.id})
-

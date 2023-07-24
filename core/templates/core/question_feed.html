@@ -1,27 +1,31 @@
-<hr />
 <div class="feed-container">
-  <div class="feed">
+  <div class="feed grid-row">
     {% for question in questions %}
-    <div class="post">
-      <p>
-        Posted by {% if user != question.user %}
-        <a href="{{ question.user.userprofile.get_absolute_url }}"
-          >{{ question.user.username }}</a
-        >{% else %} <strong>You</strong> {% endif %}, {{question.created_at|timesince}}
-      </p>
+    <div class="post question-container grid-row">
+        <div class="flex-group fs-small">
 
-      <p>Answers: {{ question.answer_set.count }}</p>
-      <h3 class="primary-heading">
+            <p>
+                Posted by {% if user != question.user %}
+                <a href="{{ question.user.userprofile.get_absolute_url }}" class=""
+                ><strong class="clr-acc">{{ question.user.username }}</strong></a
+                >{% else %} <strong class="clr-acc">You</strong> {% endif %}, {{question.created_at|timesince}}
+            </p>
+            
+            <p><span class="fw-bold">Total Answers:</span> {{ question.answer_set.count }}</p>
+        </div>
+      <h3 class="primary-heading link-active">
         <a href="{{ question.get_absolute_url }}">{{ question.title }}</a>
       </h3>
       <p>{{ question.content }}</p>
       {% if user != question.user %}
-      <a href="{% url 'core:post_answer' question_id=question.id %}" class="btn"
-        >Answer</a
-      >
+      <div class="cont">
+
+          <a href="{% url 'core:post_answer' question_id=question.id %}" class="btn"
+          >Answer</a
+          >
+        </div>
       {% endif %}
     </div>
-    <hr />
     {% endfor %}
   </div>
 </div>

@@ -1,17 +1,21 @@
 <header>
   <h3 class="logo"><a href="{% url 'core:index' %}">Ask Me</a></h3>
-  <nav>
+  <nav class="flex-group">
     {% if user.is_authenticated %}
-    <p>Hi, {{ user.username }}</p>
+    <p>Hi, <strong class="secondary-heading">{{ user.username }}</strong></p>
     {% endif %}
     <ul class="navlinks">
-      <li><a href="{% url 'core:post_question' %}">New Question</a></li>
+      <li>
+        <a href="{% url 'core:post_question' %}" class="navlink"
+          >New Question</a
+        >
+      </li>
       {% if user.is_authenticated %}
 
-      <li><a href="{% url 'core:logout' %}">Logout</a></li>
+      <li><a href="{% url 'core:logout' %}" class="navlink">Logout</a></li>
       {% else %}
-      <li><a href="{% url 'core:login' %}">Login</a></li>
-      <li><a href="{% url 'core:signup' %}">Sign Up</a></li>
+      <li><a href="{% url 'core:login' %}" class="navlink">Login</a></li>
+      <li><a href="{% url 'core:signup' %}" class="btn">Signup</a></li>
       {% endif %}
     </ul>
   </nav>

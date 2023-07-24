@@ -2,9 +2,7 @@ from django.urls import path, include
 from .views import (
     IndexView,
     QuestionDetailView,
-    QuestionEditView,
     PostQuestionView,
-    AnswerEditView,
     LikeAnswerView,
     PostAnswerView,
     LogoutView,
@@ -24,8 +22,5 @@ urlpatterns = [
     path('post_question/', PostQuestionView.as_view(), name='post_question'),
     path('post_answer/<int:question_id>/', PostAnswerView.as_view(), name='post_answer'),
     path('like_answer/<int:answer_id>/', LikeAnswerView.as_view(), name='like_answer'),
-    
-    path('edit_question/<int:pk>/', QuestionEditView.as_view(), name='edit_question'),
-    path('edit_answer/<int:pk>/', AnswerEditView.as_view(), name='edit_answer'),
 
 ]

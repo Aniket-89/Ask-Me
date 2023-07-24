@@ -1,24 +1,34 @@
-{% for answer in question.answer_set.all %}
-    <div class="answer-container">
-    <p>
-        Posted by {% if user != answer.user %}
-        <a href="{{ question.user.userprofile.get_absolute_url }}"
-        >{{ answer.user.username }}</a
-        >{% else %} <strong>You</strong> {% endif %},
-        {{answer.created_at|timesince}}
-    </p>
-    <h2 class="secondary-heading">{{ answer.content }}</h2>
+<div class="feed-container">
+    <div class="feed grid-row">        
+        <h3 class="secondary-heading">Answers</h3>
 
-    <form method="post" action="{% url 'core:like_answer' answer_id=answer.id %}">
-        {% csrf_token %}
-        <button type="submit" class="btn btn-link">
-        {% if request.user in answer.likes.all %} 
-            Dislike 
-        {% else %} 
-            Like 
-        {% endif %}
-        </button>
-    </form>
-    <p>Total likes: {{ answer.total_likes }}</p>
+        {% for answer in question.answer_set.all %}
+        <div class="post question-container grid-row">
+            <p>
+                Posted by {% if user != answer.user %}
+                <a href="{{ question.user.userprofile.get_absolute_url }}"
+                >{{ answer.user.username }}</a
+                >{% else %} <strong>You</strong> {% endif %},
+                {{answer.created_at|timesince}} ago.
+            </p>
+            <h2 class="secondary-heading">{{ answer.content }}</h2>
+
+            <div class="flex-group">
+
+                <form method="post" action="{% url 'core:like_answer' answer_id=answer.id %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-link">
+                        {% if request.user in answer.likes.all %} 
+                        Dislike 
+                        {% else %} 
+                        Like 
+                        {% endif %}
+                    </button>
+                </form>
+                <p><span class="fw-bold">Total likes: {{ answer.total_likes }}</span></p>
+            </div>
+        </div>
+        {% endfor %}
+
     </div>
-{% endfor %}
+</div>
